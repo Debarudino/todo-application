@@ -1,0 +1,75 @@
+<div class="flex justify-center items-center min-h-screen bg-gradient-to-br from-cyan-200 to-blue-200">
+  <div class="w-full max-w-md bg-[#ff6b6b] text-white rounded-lg overflow-hidden shadow-xl">
+    <div class="p-6 pb-2">
+      <h1 class="text-5xl font-bold text-center">Todo List</h1>
+      <h2 class="text-xl text-center mt-2">A simple React Todo List App</h2>
+      <div class="mt-4 border-t border-white/20 pt-2"></div>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="px-6 pt-2">
+      <mat-form-field appearance="outline" class="w-full bg-white/10 rounded">
+        <input 
+          matInput 
+          [(ngModel)]="searchText" 
+          (ngModelChange)="onSearchChange()"
+          placeholder="Search tasks..." 
+          class="text-white placeholder-white/70"
+        />
+      </mat-form-field>
+    </div>
+
+    <!-- Todo List -->
+    <div class="px-6">
+      <div 
+        *ngFor="let todo of filteredTodos" 
+        class="flex items-center justify-between py-4 px-2 border-b border-[#ff8585]"
+        (click)="toggleComplete(todo)"
+      >
+        <span 
+          class="text-xl cursor-pointer" 
+          [ngClass]="{'line-through text-white/70': todo.completed}"
+        >
+          {{ todo.title }}
+        </span>
+        <div class="flex space-x-2">
+          <button 
+            mat-icon-button 
+            (click)="$event.stopPropagation(); editTodo(todo)" 
+            class="p-2 hover:bg-[#ff8585] rounded-full transition-colors"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button 
+            mat-icon-button 
+            (click)="$event.stopPropagation(); deleteTodo(todo.id)" 
+            class="p-2 hover:bg-[#ff8585] rounded-full transition-colors"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- New Todo Input -->
+    <div class="p-6">
+      <h3 class="text-2xl mb-4">New todo</h3>
+      <div class="flex gap-2">
+        <input
+          matInput
+          [(ngModel)]="newTodoTitle"
+          placeholder="New Todo"
+          (keyup.enter)="addTodo()"
+          class="flex-1 px-4 py-3 rounded text-gray-800 placeholder-gray-400 focus:outline-none"
+        />
+        <button
+          mat-flat-button
+          (click)="addTodo()"
+          class="px-4 py-3 bg-[#ff8585] hover:bg-[#ff9b9b] transition-colors rounded uppercase font-medium"
+        >
+          ADD TODO
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
